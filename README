@@ -1,20 +1,13 @@
 			GCHAT - Readme file
 
-gchat is an instant messenger application to communicate with people. 
+gchat is an instant messenger application to communicate with people Under Linux. This is the free software in the Internet. So you can download the source code and make them in your pc.
+This is created with Glade for the GUI and TCP socket for communication.
 It has gchat_server and gchat_client. 
 gchat_server runs in CUI and gchat_client in GUI. 
 
 INSTALLATION:
-~~~~~~~~~~~~~
-Copy the tar file to any folder and untar that.
-
-  $ tar -jzxf gchat.tar.gz
-
-Now the 'gchat' folder contains two folders 
-'gchat_client'and 'gchat_server'. 
-Installing these two are given below.
-
-gchat_server:
+~~~~~~~~~
+For gchat_server:
 ~~~~~~~~~~~~~
 Go into the 'gchat_server' directory. There will be an binary file 
 named 'gchat_server'.You can straight away run that or you can compile 
@@ -33,11 +26,11 @@ gchat_client:
 The simplest way to compile this package is:
 
   1. `cd' to the directory containing the package's source code and type
-     `./configure' to configure the package for your system.  If you're
-     using `csh' on an old version of System V, you might need to type
-     `sh ./configure' instead to prevent `csh' from trying to execute
-     `configure' itself.
-
+     `./configure' to configure the package for your system.
+***Take Notes: 
+（1）. in Configure process, the makefile is automaked by the tool: automake-1.13. So, before making the source code, you need to check the version of your automake by checking "/usr/share/automake-xxx-xxx". If different from automake-1.13, you need you change the link file for example install-sh,etc.
+（2）. before making, you need to ensure that your linux is builded with GTK, if not, make it installed in your pc.
+Then:
      Running `configure' takes awhile.  While running, it prints some
      messages telling which features it is checking for.
 
@@ -64,5 +57,3 @@ you will see the binary file named 'gchat'.
 Run that to see the 'gchat_client' GUI interface. 
 Make sure that 'gchat_server' is already running, 
 so that your requests are accepted. 
-
-
