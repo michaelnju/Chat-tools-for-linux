@@ -1,0 +1,68 @@
+			GCHAT - Readme file
+
+gchat is an instant messenger application to communicate with people. 
+It has gchat_server and gchat_client. 
+gchat_server runs in CUI and gchat_client in GUI. 
+
+INSTALLATION:
+~~~~~~~~~~~~~
+Copy the tar file to any folder and untar that.
+
+  $ tar -jzxf gchat.tar.gz
+
+Now the 'gchat' folder contains two folders 
+'gchat_client'and 'gchat_server'. 
+Installing these two are given below.
+
+gchat_server:
+~~~~~~~~~~~~~
+Go into the 'gchat_server' directory. There will be an binary file 
+named 'gchat_server'.You can straight away run that or you can compile 
+the application and create a new one. To comlipe type 
+
+  $ gcc gchat_server.c -o gchat_server -pthread
+
+You will get the binary named 'gchat_server'. Run that!!
+To add users to the gchat use the 'addUsers' binary file. 
+When you run that you will get four options, add, display, delete and 
+exit.Go for the option you want and you will be prompted with messages 
+for all that you do. 
+
+gchat_client:
+~~~~~~~~~~~~~
+The simplest way to compile this package is:
+
+  1. `cd' to the directory containing the package's source code and type
+     `./configure' to configure the package for your system.  If you're
+     using `csh' on an old version of System V, you might need to type
+     `sh ./configure' instead to prevent `csh' from trying to execute
+     `configure' itself.
+
+     Running `configure' takes awhile.  While running, it prints some
+     messages telling which features it is checking for.
+
+  2. Type `make' to compile the package.
+
+  3. Optionally, type `make check' to run any self-tests that come with
+     the package.
+
+  4. Type `make install' to install the programs and any data files and
+     documentation.
+
+  5. You can remove the program binaries and object files from the
+     source code directory by typing `make clean'.  To also remove the
+     files that `configure' created (so you can compile the package for
+     a different kind of computer), type `make distclean'.  There is
+     also a `make maintainer-clean' target, but that is intended mainly
+     for the package's developers.  If you use it, you may have to get
+     all sorts of other programs in order to regenerate files that came
+     with the distribution.
+	
+You get lot of messages running upwards. 
+After compiling go into the directory 'src' inside 'gchat_client' directory, 
+you will see the binary file named 'gchat'. 
+Run that to see the 'gchat_client' GUI interface. 
+Make sure that 'gchat_server' is already running, 
+so that your requests are accepted. 
+
+
