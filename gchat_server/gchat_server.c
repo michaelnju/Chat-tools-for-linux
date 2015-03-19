@@ -86,11 +86,11 @@ void gif_handle_client(int client_sockfd)
 			return;
 		}
 		gifheader = (gifhdr_t *) malloc (sizeof(gifhdr_t));
-		memcpy(gifheader, gifbuffer, 32);
+		memcpy(gifheader, gifbuffer, 32);   // the first 32B is the header of the message.
 		if((gifheader->length) > 0)
 		{
 			gifdata = (char *) malloc(gifheader->length);
-			memcpy(gifdata , (gifbuffer + 32), gifheader->length);
+			memcpy(gifdata , (gifbuffer + 32), gifheader->length);  // later comes the gifdata.
 		}
 
 		switch(gifheader->type)
@@ -113,8 +113,8 @@ void gif_handle_client(int client_sockfd)
 					exit(0);
 				}
 
-				ptr = (char *)strstr(gifdata, "#*&");
-				loginlength = ptr - gifdata;
+				ptr = (char *)strstr(gifdata, "#*&");    //to locate in the "#*&"
+				loginlength = ptr - gifdata;  
 				ptr = ptr + 3;
 				while(*ptr != '\0')
 				{
@@ -451,8 +451,10 @@ void gif_handle_client(int client_sockfd)
 				break;
 			}
 
-			case 6: //GIF_CHAT_MSG
+			case 6: //GIF_CHAT_MSG. First to check if the receicer online, if not handle it in offline.
 			{
+
+				printf("Receive message from client and  begin to transfer it!");
 				char *gifbufferS;
 				online_users_t ousr;
 				FILE *onlinefp;
