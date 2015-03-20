@@ -69,7 +69,7 @@ on_mnuConnect_activate                 (GtkMenuItem     *menuitem,
 	gtk_widget_show(authen);
 }
 
-
+/* Disconnect from the server*/
 void
 on_mnuDisconect_activate               (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
@@ -136,6 +136,7 @@ on_mnuDisconect_activate               (GtkMenuItem     *menuitem,
 }
 
 
+/*Close window*/
 void
 on_mnuQuit_activate                    (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
@@ -161,7 +162,7 @@ on_butConnect_clicked                  (GtkButton       *button,
 	gtk_widget_show(authen);
 }
 
-
+/* add friends button */
 void
 on_butAdd_clicked                      (GtkButton       *button,
                                         gpointer         user_data)
@@ -178,6 +179,8 @@ on_butConf_clicked                     (GtkButton       *button,
 }
 
 
+
+/* Tell the server to get the offline message*/
 void
 on_butOffline_clicked                  (GtkButton       *button,
                                         gpointer         user_data)
@@ -231,6 +234,12 @@ on_butClear_clicked                    (GtkButton       *button,
 }
 
 
+
+
+
+/*
+ 	Handle the logining action.
+ */
 void
 on_butOk_clicked                       (GtkButton       *button,
                                         gpointer         user_data)
@@ -248,6 +257,7 @@ on_butOk_clicked                       (GtkButton       *button,
 	//initialising the server details
 	servAddr.sin_family = AF_INET;
 	servAddr.sin_port = htons(SERVER_PORT);
+	// get server ip from the textbox
 	inet_pton(AF_INET, gtk_entry_get_text(GTK_ENTRY(servip)), &servAddr.sin_addr);
 
 	//create socket
@@ -266,10 +276,10 @@ on_butOk_clicked                       (GtkButton       *button,
 		gtk_widget_show(create_msgbox("error", errormsg));
 		return;
 	}
-
+// fill socket logining message. In the messageBuf, the first struct is the header, then comes with gifdatas.
 	gifheaderS = (gifhdr_t *) malloc(sizeof(gifhdr_t));
 	gifheaderS->type = GIF_LOGIN_MSG;
-	strcpy(gifheaderS->sender, gtk_entry_get_text(GTK_ENTRY(loginid)));
+	strcpy(gifheaderS->sender, gtk_entry_get_text(GTK_ENTRY(loginid)));  
 	strcpy(gifheaderS->receiver, "server");
 	gifheaderS->reserved = 0;
 
@@ -302,6 +312,12 @@ on_butOk_clicked                       (GtkButton       *button,
 
 	gtk_widget_destroy(authen);
 }
+
+
+/*
+ get message from the server and handle it for different type.
+ 
+ */
 
 void
 gif_receive_messages(server_sockfd)
@@ -572,6 +588,7 @@ int server_sockfd;
 					gdk_threads_leave();
 				}
 		
+				// to display the message in " User: message "
 				gdk_threads_enter();
 				display_text = lookup_widget(chat_window[ptr->window_id], "txtDisplay");
 				buff = gtk_text_view_get_buffer(GTK_TEXT_VIEW(display_text));
@@ -582,8 +599,8 @@ int server_sockfd;
 
 				// setting the color(blue) for client's name in the display text box
 				gdk_threads_enter();
-			        line_no = gtk_text_buffer_get_line_count (buff);
-			        gtk_text_buffer_get_iter_at_line (buff, &start, line_no);
+			    line_no = gtk_text_buffer_get_line_count (buff);
+			    gtk_text_buffer_get_iter_at_line (buff, &start, line_no);
 				gtk_text_buffer_get_iter_at_line_offset (buff, &end, line_no, strlen(gifheader->sender));
 				gtk_text_buffer_apply_tag_by_name (buff, "blue_foreground",&start, &end);
 
@@ -805,14 +822,14 @@ gif_select_offline_messages(GtkTreeSelection *selection, gpointer data)
 		//gtk_list_store_remove(offline_temp_store, &iter);
                 //gtk_tree_model_get (model, &iter, OFFLINE_MSG_TEXT, &offline_selected_msg, -1);
 		//g_print(offline_selected_msg);
-	}
+		}
 }
 
 
 static void
 gif_call_client_for_chat(GtkTreeSelection *selection, gpointer data)
 {
-	contacts_chat_window_id_t *ptr;
+		contacts_chat_window_id_t *ptr;
         GtkTreeIter iter;
         GtkTreeModel *model;
         gchar *selected_name;
@@ -853,7 +870,9 @@ gif_call_client_for_chat(GtkTreeSelection *selection, gpointer data)
         }
 }
 
-
+/*
+ 	send the chat message to the friend by the server transmiting it.
+ */
 void
 on_butSend_clicked                     (GtkButton       *button,
                                         gpointer         user_data)
@@ -880,8 +899,8 @@ on_butSend_clicked                     (GtkButton       *button,
 	gtk_text_buffer_insert_at_cursor(buff, gtk_entry_get_text(GTK_ENTRY(input_text)), -1);
 
 	// setting the color(red) for client's name in the display text box
-        line_no = gtk_text_buffer_get_line_count (buff);
-        gtk_text_buffer_get_iter_at_line (buff, &start, line_no);
+    line_no = gtk_text_buffer_get_line_count (buff);
+    gtk_text_buffer_get_iter_at_line (buff, &start, line_no);
 	gtk_text_buffer_get_iter_at_line_offset (buff, &end, line_no, strlen(client_loginid));
 	gtk_text_buffer_apply_tag_by_name (buff, "red_foreground",&start, &end);
 
@@ -1004,7 +1023,9 @@ on_entInput_activate                   (GtkEntry        *entry,
 	free(gifheaderS);
 }
 
-
+/*
+ Send "adding friends message" to the server
+ */
 void
 on_butAddContactsOk_clicked            (GtkButton       *button,
                                         gpointer         user_data)
@@ -1058,6 +1079,8 @@ on_butAddContactsCancel_clicked        (GtkButton       *button,
 }
 
 
+
+/* send the "deleting friends message to the server "*/
 void
 on_butOfflineDelete_clicked            (GtkButton       *button,
                                         gpointer         user_data)
